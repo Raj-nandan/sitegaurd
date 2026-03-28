@@ -13,8 +13,23 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
-app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:5173', credentials: true }));
+// Middleware - allow web client and mobile (Expo web + native)
+const allowedOrigins = [
+  process.env.CLIENT_URL || 'http://localhost:5000',
+  'http://localhost:8081',
+  'http://localhost:19006',
+];
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow requests with no origin (native mobile apps) or from allowed list
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(null, true); // permissive in dev; tighten in prod
+    }
+  },
+  credentials: true,
+}));
 app.use(express.json());
 
 // Routes
