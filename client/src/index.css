@@ -1,0 +1,189 @@
+@import "tailwindcss";
+
+/* ─── Google Font references ─────────────────────────────── */
+/* Loaded via index.html */
+
+/* ─── CSS Custom Properties ──────────────────────────────── */
+:root {
+  /* Light mode (default) */
+  --bg: #fafaf8;
+  --bg2: #f2f1ed;
+  --bg3: #e8e6e0;
+  --text: #141412;
+  --text2: #5a5a54;
+  --text3: #9a9a92;
+  --border: rgba(0, 0, 0, 0.08);
+  --border2: rgba(0, 0, 0, 0.14);
+  --accent: #1d9e75;
+  --accent-light: #e1f5ee;
+  --accent-dark: #0f6e56;
+  --card: #ffffff;
+  --shadow: 0 2px 24px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 8px 48px rgba(0, 0, 0, 0.1);
+
+  /* Status colors */
+  --status-up: #1d9e75;
+  --status-warn: #ba7517;
+  --status-down: #e24b4a;
+}
+
+[data-theme="dark"] {
+  --bg: #0f0f0d;
+  --bg2: #191917;
+  --bg3: #222220;
+  --text: #f0efe8;
+  --text2: #a0a098;
+  --text3: #606058;
+  --border: rgba(255, 255, 255, 0.07);
+  --border2: rgba(255, 255, 255, 0.12);
+  --card: #1a1a18;
+  --shadow: 0 2px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 48px rgba(0, 0, 0, 0.5);
+  --accent-light: rgba(29, 158, 117, 0.15);
+}
+
+/* ─── Base Reset ──────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.2s ease, color 0.2s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Typography Utilities ────────────────────────────────── */
+.font-display {
+  font-family: 'Instrument Serif', Georgia, serif;
+}
+
+.font-mono-label {
+  font-family: 'DM Mono', 'Courier New', monospace;
+}
+
+/* ─── Animations ──────────────────────────────────────────── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.15); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-32px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+.animate-fade-up {
+  animation: fade-up 0.6s ease both;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease both;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.5s ease both;
+}
+
+/* ─── Scroll animation (via IntersectionObserver) ─────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── Common UI tokens ────────────────────────────────────── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.12s ease, box-shadow 0.18s ease;
+  text-decoration: none;
+}
+.btn-primary:hover {
+  background: var(--accent-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(29, 158, 117, 0.3);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.18s ease, background 0.18s ease;
+  text-decoration: none;
+}
+.btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-light);
+}
+
+/* ─── Status pill colors ──────────────────────────────────── */
+.pill-up    { background: rgba(29,158,117,0.12); color: #1d9e75; }
+.pill-warn  { background: rgba(186,117,23,0.12); color: #ba7517; }
+.pill-down  { background: rgba(226,75,74,0.12);  color: #e24b4a; }
+
+/* ─── Dot grid background ─────────────────────────────────── */
+.dot-grid {
+  background-image: radial-gradient(circle, var(--border2) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* ─── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text3); }
